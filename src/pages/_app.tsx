@@ -1,12 +1,14 @@
 import { FC } from 'react'
 
-import { ThemeProvider, theme, CSSReset } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
+import { theme } from '~/styles/theme'
+
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <ThemeProvider theme={theme}>
+    <ChakraProvider resetCSS theme={theme}>
       <Head>
         <title>Next.js Starter with Chakra UI</title>
         <meta
@@ -14,10 +16,9 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
           content="A Next.js starter configured with Chakra UI"
         />
       </Head>
-      <CSSReset />
 
       <Component {...pageProps} />
-    </ThemeProvider>
+    </ChakraProvider>
   )
 }
 
