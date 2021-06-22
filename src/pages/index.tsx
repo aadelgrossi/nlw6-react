@@ -1,84 +1,76 @@
-import { FC } from 'react'
-
-import { Heading, Link, Text, Code, Flex } from '@chakra-ui/react'
+import { Flex, Image, Heading, Text, Button, Input } from '@chakra-ui/react'
 import Head from 'next/head'
 
-import { Card, Footer } from '~/components'
+import { Separator } from '~/components'
 
-const IndexPage: FC = () => {
+const IndexPage = (): JSX.Element => {
   return (
-    <Flex justify="center" align="center" minHeight="100vh" direction="column">
+    <>
       <Head>
-        <title>Create Next App</title>
+        <title>Let Me Ask</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Flex
-        as="main"
-        align="center"
-        justify="center"
-        direction="column"
-        my="auto"
-        pt="8"
-      >
-        <Heading as="h1" size="2xl" mb="2" textAlign="center">
-          Welcome to{' '}
-          <Link color="teal.500" href="https://nextjs.org">
-            Next.js!
-          </Link>
-        </Heading>
-
-        <Text fontSize="xl" mt="2">
-          Get started by editing <Code>pages/index.js</Code>
-        </Text>
-
+      <Flex h="100vh" align="stretch">
         <Flex
-          flexWrap="wrap"
-          alignItems="center"
-          justifyContent="center"
-          maxW="800px"
-          mt="10"
+          justify="center"
+          direction="column"
+          as="aside"
+          flex={7}
+          bg="primary"
+          color="white"
+          py="120px"
+          px="80px"
         >
-          <Card href="https://nextjs.org/docs">
-            <Heading as="h3" size="md" mb="2">
-              Documentation &rarr;
-            </Heading>
-            <Text>
-              Find in-depth information about Next.js features and API.
-            </Text>
-          </Card>
-
-          <Card href="https://nextjs.org/learn">
-            <Heading as="h3" size="md" mb="2">
-              Learn &rarr;
-            </Heading>
-            <Text>
-              Learn about Next.js in an interactive course with quizzes!
-            </Text>
-          </Card>
-
-          <Card href="https://github.com/vercel/next.js/tree/master/examples">
-            <Heading as="h3" size="md" mb="2">
-              Examples &rarr;
-            </Heading>
-            <Text>
-              Discover and deploy boilerplate example Next.js projects.
-            </Text>
-          </Card>
-
-          <Card href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app">
-            <Heading as="h3" size="md" mb="2">
-              Deploy &rarr;
-            </Heading>
-            <Text>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </Text>
-          </Card>
+          <Image maxW="320px" src="/assets/illustration.svg"></Image>
+          <Heading lineHeight="42px" mt={2} as="h1">
+            Crie salas de Q&amp;A ao vivo{' '}
+          </Heading>
+          <Text fontSize="1.5em">
+            Tire as dúvidas da sua audiência em tempo real
+          </Text>
+        </Flex>
+        <Flex as="main" flex={8} px="32px" align="center" justify="center">
+          <Flex
+            direction="column"
+            w="full"
+            maxW="400px"
+            align="stretch"
+            textAlign="center"
+          >
+            <Image alignSelf="center" src="/assets/logo.svg"></Image>
+            <Button
+              fontWeight="medium"
+              transition="filter 0.2s"
+              _hover={{ filter: 'brightness(0.9)' }}
+              color="white"
+              bg="google"
+              mt={12}
+              h="50px"
+              borderRadius="lg"
+            >
+              <Image mr={2} src="/assets/google-icon.svg" />
+              Crie sua sala com o Google
+            </Button>
+            <Separator>ou entre em uma sala</Separator>
+            <Flex as="form" direction="column">
+              <Input
+                w="full"
+                h="50px"
+                borderRadius="lg"
+                px="16px"
+                bg="white"
+                border="1px"
+                borderColor="lightgray"
+                placeholder="Digite o código da sala"
+              />
+              <Button w="full" mt="1rem" type="submit">
+                Entrar na sala
+              </Button>
+            </Flex>
+          </Flex>
         </Flex>
       </Flex>
-
-      <Footer />
-    </Flex>
+    </>
   )
 }
 
