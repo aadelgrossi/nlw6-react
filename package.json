@@ -1,0 +1,46 @@
+{
+  "name": "next-chakra-ts-starter",
+  "version": "1.0.0",
+  "description": "Next.js + TypeScript + ESLint/Prettier + Chakra UI",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Andre Grossi",
+  "license": "MIT",
+  "dependencies": {
+    "@chakra-ui/react": "^1.3.3",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
+    "framer-motion": "^3.6.7",
+    "next": "10.0.4",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-icons": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.11",
+    "@types/node": "^14.14.22",
+    "@types/react": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "classnames": "2.2.6",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-html": "^6.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.3"
+  }
+}
