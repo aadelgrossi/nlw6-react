@@ -1,12 +1,14 @@
 import { Flex, Image, Heading, Text, Input, Icon } from '@chakra-ui/react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { CgLogIn } from 'react-icons/cg'
 import { ImGoogle } from 'react-icons/im'
 
+import { useAuth } from '~/auth/useAuth'
 import { Separator, Button } from '~/components'
 
 const IndexPage = (): JSX.Element => {
+  const { login } = useAuth()
+
   return (
     <>
       <Head>
@@ -41,16 +43,15 @@ const IndexPage = (): JSX.Element => {
             textAlign="center"
           >
             <Image alignSelf="center" src="/assets/logo.svg"></Image>
-            <Link href="/rooms/new" passHref>
-              <Button
-                as="a"
-                bg="google"
-                mt={12}
-                leftIcon={<Icon as={ImGoogle} />}
-              >
-                Crie sua sala com o Google
-              </Button>
-            </Link>
+            <Button
+              as="a"
+              bg="google"
+              mt={12}
+              onClick={login}
+              leftIcon={<Icon as={ImGoogle} />}
+            >
+              Crie sua sala com o Google
+            </Button>
             <Separator>ou entre em uma sala</Separator>
             <Flex as="form" direction="column">
               <Input
