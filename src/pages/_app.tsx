@@ -1,24 +1,23 @@
 import { FC } from 'react'
 
-import { ChakraProvider } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
-import { theme } from '~/styles/theme'
+import { AppProvider } from '~/providers'
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <ChakraProvider resetCSS theme={theme}>
+    <AppProvider>
       <Head>
-        <title>Next.js Starter with Chakra UI</title>
+        <title>Let Me Ask | NLW #6 React</title>
         <meta
-          name="Description"
-          content="A Next.js starter configured with Chakra UI"
+          name="Let Me Ask"
+          content="Crie salas de Q&A ao vivo e tire as dúvidas da sua audiência em tempo real"
         />
       </Head>
 
       <Component {...pageProps} />
-    </ChakraProvider>
+    </AppProvider>
   )
 }
 
