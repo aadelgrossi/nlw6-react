@@ -1,5 +1,6 @@
 import { Flex, Image, Heading, Text, Input, Icon } from '@chakra-ui/react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { CgLogIn } from 'react-icons/cg'
 import { ImGoogle } from 'react-icons/im'
 
@@ -40,9 +41,16 @@ const IndexPage = (): JSX.Element => {
             textAlign="center"
           >
             <Image alignSelf="center" src="/assets/logo.svg"></Image>
-            <Button bg="google" mt={12} leftIcon={<Icon as={ImGoogle} />}>
-              Crie sua sala com o Google
-            </Button>
+            <Link href="/rooms/new" passHref>
+              <Button
+                as="a"
+                bg="google"
+                mt={12}
+                leftIcon={<Icon as={ImGoogle} />}
+              >
+                Crie sua sala com o Google
+              </Button>
+            </Link>
             <Separator>ou entre em uma sala</Separator>
             <Flex as="form" direction="column">
               <Input

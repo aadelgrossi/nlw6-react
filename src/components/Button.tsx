@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ForwardRefRenderFunction, ReactNode, forwardRef } from 'react'
 
 import {
   Button as ChakraButton,
@@ -9,9 +9,13 @@ interface ButtonProps extends ChakraProps {
   children: ReactNode
 }
 
-export const Button = ({ children, ...props }: ButtonProps): JSX.Element => {
+const CustomButton: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
+  { children, ...props },
+  ref
+): JSX.Element => {
   return (
     <ChakraButton
+      ref={ref}
       fontWeight="medium"
       transition="filter 0.2s"
       h="50px"
@@ -25,3 +29,5 @@ export const Button = ({ children, ...props }: ButtonProps): JSX.Element => {
     </ChakraButton>
   )
 }
+
+export const Button = forwardRef(CustomButton)
