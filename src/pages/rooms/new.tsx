@@ -1,4 +1,4 @@
-import { Flex, Image, Heading, Text, Input, Icon, Box } from '@chakra-ui/react'
+import { Flex, Image, Heading, Text, Input, Icon } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { BiPlus } from 'react-icons/bi'
@@ -64,10 +64,15 @@ const NewRoom = (): JSX.Element => {
                 Criar sala
               </Button>
             </Flex>
-            <Text fontSize="sm" color="gray.500" mt="2">
+            <Text fontSize="sm" color="gray.500" mt="6">
               Quer entrar em uma sala existente?{' '}
-              <Link href="#">
-                <Text as="span" color="secondary" textDecoration="underline">
+              <Link href="/">
+                <Text
+                  as="span"
+                  cursor="pointer"
+                  color="secondary"
+                  textDecoration="underline"
+                >
                   clique aqui.
                 </Text>
               </Link>
