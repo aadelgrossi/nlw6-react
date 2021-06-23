@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { BiPlus } from 'react-icons/bi'
 
-import { Button } from '~/components'
+import { Button, SplashBar } from '~/components'
 
 const NewRoom = (): JSX.Element => {
   return (
@@ -12,26 +12,20 @@ const NewRoom = (): JSX.Element => {
         <title>Nova sala | Let Me Ask</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Flex h="100vh" align="stretch">
+      <Flex
+        minH="100vh"
+        align="stretch"
+        direction={['column', 'column', 'row']}
+      >
+        <SplashBar />
         <Flex
+          as="main"
+          flex={8}
+          px={12}
+          py={20}
+          align="center"
           justify="center"
-          direction="column"
-          as="aside"
-          flex={7}
-          bg="primary"
-          color="white"
-          py="120px"
-          px="80px"
         >
-          <Image maxW="320px" src="/assets/illustration.svg"></Image>
-          <Heading lineHeight="42px" mt={2} as="h1">
-            Crie salas de Q&amp;A ao vivo{' '}
-          </Heading>
-          <Text fontSize="1.5em">
-            Tire as dúvidas da sua audiência em tempo real
-          </Text>
-        </Flex>
-        <Flex as="main" flex={8} px="32px" align="center" justify="center">
           <Flex
             direction="column"
             w="full"

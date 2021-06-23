@@ -1,13 +1,13 @@
 import { useCallback } from 'react'
 
-import { Flex, Image, Heading, Text, Input, Icon } from '@chakra-ui/react'
+import { Flex, Image, Input, Icon } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { CgLogIn } from 'react-icons/cg'
 import { ImGoogle } from 'react-icons/im'
 
 import { useAuth } from '~/auth/useAuth'
-import { Separator, Button } from '~/components'
+import { Separator, Button, SplashBar } from '~/components'
 
 const IndexPage = (): JSX.Element => {
   const { login, user } = useAuth()
@@ -27,26 +27,16 @@ const IndexPage = (): JSX.Element => {
         <title>Let Me Ask</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Flex h="100vh" align="stretch">
+      <Flex h="100vh" align="stretch" direction={['column', 'column', 'row']}>
+        <SplashBar />
         <Flex
+          as="main"
+          flex={8}
+          px={12}
+          py={20}
+          align="center"
           justify="center"
-          direction="column"
-          as="aside"
-          flex={7}
-          bg="primary"
-          color="white"
-          py="120px"
-          px="80px"
         >
-          <Image maxW="320px" src="/assets/illustration.svg"></Image>
-          <Heading lineHeight="42px" mt={2} as="h1">
-            Crie salas de Q&amp;A ao vivo{' '}
-          </Heading>
-          <Text fontSize="1.5em">
-            Tire as dúvidas da sua audiência em tempo real
-          </Text>
-        </Flex>
-        <Flex as="main" flex={8} px="32px" align="center" justify="center">
           <Flex
             direction="column"
             w="full"
