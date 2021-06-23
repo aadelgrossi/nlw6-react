@@ -26,6 +26,7 @@ export const Separator = ({ children }: SeparatorProps): JSX.Element => {
       align="center"
       className="divider"
       fontSize="14px"
+      color="lightgray"
       my="32px"
     >
       {children}
