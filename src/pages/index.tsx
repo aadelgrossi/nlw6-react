@@ -1,7 +1,9 @@
-import { Flex, Image, Heading, Text, Button, Input } from '@chakra-ui/react'
+import { Flex, Image, Heading, Text, Input, Icon } from '@chakra-ui/react'
 import Head from 'next/head'
+import { CgLogIn } from 'react-icons/cg'
+import { ImGoogle } from 'react-icons/im'
 
-import { Separator } from '~/components'
+import { Separator, Button } from '~/components'
 
 const IndexPage = (): JSX.Element => {
   return (
@@ -38,17 +40,7 @@ const IndexPage = (): JSX.Element => {
             textAlign="center"
           >
             <Image alignSelf="center" src="/assets/logo.svg"></Image>
-            <Button
-              fontWeight="medium"
-              transition="filter 0.2s"
-              _hover={{ filter: 'brightness(0.9)' }}
-              color="white"
-              bg="google"
-              mt={12}
-              h="50px"
-              borderRadius="lg"
-            >
-              <Image mr={2} src="/assets/google-icon.svg" />
+            <Button bg="google" mt={12} leftIcon={<Icon as={ImGoogle} />}>
               Crie sua sala com o Google
             </Button>
             <Separator>ou entre em uma sala</Separator>
@@ -63,7 +55,12 @@ const IndexPage = (): JSX.Element => {
                 borderColor="lightgray"
                 placeholder="Digite o código da sala"
               />
-              <Button w="full" mt="1rem" type="submit">
+              <Button
+                type="submit"
+                bg="primary"
+                mt="1rem"
+                leftIcon={<Icon as={CgLogIn} />}
+              >
                 Entrar na sala
               </Button>
             </Flex>
