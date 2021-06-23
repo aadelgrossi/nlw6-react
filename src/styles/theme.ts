@@ -5,7 +5,11 @@ export const theme = extendTheme({
     white: '#f8f8f8',
     text: '#2a292e',
     primary: '#835afd',
-    lightgray: '#a8a8b3',
+    secondary: '#e559f9',
+    gray: {
+      400: '#a8a8b3',
+      500: '#737380'
+    },
     google: '#ea4335'
   },
   fonts: {

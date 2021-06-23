@@ -13,20 +13,20 @@ export const Separator = ({ children }: SeparatorProps): JSX.Element => {
         content: "''",
         flex: 1,
         height: '1px',
-        background: 'lightgray',
+        background: 'gray.400',
         marginRight: '1rem'
       }}
       _after={{
         content: "''",
         flex: 1,
         height: '1px',
-        background: 'lightgray',
+        background: 'gray.400',
         marginLeft: '1rem'
       }}
       align="center"
       className="divider"
       fontSize="14px"
-      color="lightgray"
+      color="gray.400"
       my="32px"
     >
       {children}

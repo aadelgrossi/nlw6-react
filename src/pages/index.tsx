@@ -52,7 +52,7 @@ const IndexPage = (): JSX.Element => {
                 px="16px"
                 bg="white"
                 border="1px"
-                borderColor="lightgray"
+                borderColor="gray.400"
                 placeholder="Digite o código da sala"
               />
               <Button
