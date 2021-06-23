@@ -15,7 +15,7 @@ import { removeTokenCookie, setTokenCookie } from './tokenCookies'
 interface AuthContextData {
   user: firebase.User | null
   logout: () => void
-  login: () => Promise<void>
+  login: () => Promise<firebase.auth.UserCredential | undefined>
   authenticated: boolean
 }
 
@@ -31,10 +31,12 @@ export const AuthProvider: FC = ({ children }) => {
     })
   }, [router])
 
-  const login = useCallback(async (): Promise<void> => {
+  const login = useCallback(async (): Promise<
+    firebase.auth.UserCredential | undefined
+  > => {
     const provider = new firebase.auth.GoogleAuthProvider()
 
-    auth.signInWithPopup(provider).then(result => console.log({ result }))
+    return auth.signInWithPopup(provider)
   }, [])
 
   useEffect(() => {

@@ -1,5 +1,8 @@
+import { useCallback } from 'react'
+
 import { Flex, Image, Heading, Text, Input, Icon } from '@chakra-ui/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { CgLogIn } from 'react-icons/cg'
 import { ImGoogle } from 'react-icons/im'
 
@@ -7,7 +10,16 @@ import { useAuth } from '~/auth/useAuth'
 import { Separator, Button } from '~/components'
 
 const IndexPage = (): JSX.Element => {
-  const { login } = useAuth()
+  const { login, user } = useAuth()
+  const router = useRouter()
+
+  const handleCreateRoom = useCallback(async () => {
+    if (!user) {
+      await login()
+    }
+
+    router.push('/rooms/new')
+  }, [login, router, user])
 
   return (
     <>
@@ -44,10 +56,9 @@ const IndexPage = (): JSX.Element => {
           >
             <Image alignSelf="center" src="/assets/logo.svg"></Image>
             <Button
-              as="a"
               bg="google"
               mt={12}
-              onClick={login}
+              onClick={handleCreateRoom}
               leftIcon={<Icon as={ImGoogle} />}
             >
               Crie sua sala com o Google
