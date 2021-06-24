@@ -16,12 +16,20 @@ export const RoomCode = ({ children }: RoomCodeProps): JSX.Element => {
       <Button
         onClick={handleClick}
         h="40px"
+        _hover={{ bg: 'primary' }}
         bg="primary"
-        border="1px solid #835afd"
+        borderWidth="1px"
+        borderColor="primary"
       >
         <Image src="/assets/copy.svg" />
       </Button>
-      <Button h="40px" p={4} border="1px solid #835afd" variant="ghost">
+      <Button
+        h="40px"
+        p={4}
+        borderWidth="1px"
+        borderColor="primary"
+        variant="ghost"
+      >
         Sala: {children}
       </Button>
     </ButtonGroup>
