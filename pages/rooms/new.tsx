@@ -11,15 +11,13 @@ import {
 } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { BiPlus } from 'react-icons/bi'
 
 import { useAuth } from '~/auth/useAuth'
 import { Button, SplashBar } from '~/components'
-
-interface NewRoomFormData {
-  name: string
-}
+import { useRoom, CreateRoomData } from '~/rooms'
 
 const NewRoom = (): JSX.Element => {
   const { authenticated, user } = useAuth()
@@ -27,11 +25,23 @@ const NewRoom = (): JSX.Element => {
     register,
     handleSubmit,
     formState: { isSubmitting }
-  } = useForm<NewRoomFormData>()
+  } = useForm<CreateRoomData>()
+  const { createRoom } = useRoom()
+  const router = useRouter()
 
-  const onSubmit = useCallback((data: NewRoomFormData) => {
-    console.log({ data })
-  }, [])
+  const onSubmit = useCallback(
+    async (data: CreateRoomData) => {
+      if (user) {
+        const newRoom = await createRoom({
+          authorId: user.uid,
+          name: data.name
+        })
+
+        router.push(`/rooms/${newRoom.key}`)
+      }
+    },
+    [createRoom, user, router]
+  )
 
   return (
     <>
