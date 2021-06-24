@@ -17,10 +17,10 @@
     "allowJs": false,
     "strict": true,
     "jsx": "preserve",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
       "~/*": [
-        "./*"
+        "./src/*"
       ]
     },
   },
