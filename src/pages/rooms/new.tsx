@@ -1,11 +1,38 @@
-import { Flex, Image, Heading, Text, Input, Icon } from '@chakra-ui/react'
+import { useCallback } from 'react'
+
+import {
+  Flex,
+  Image,
+  Heading,
+  Text,
+  Input,
+  Icon,
+  Avatar
+} from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useForm } from 'react-hook-form'
 import { BiPlus } from 'react-icons/bi'
 
+import { useAuth } from '~/auth/useAuth'
 import { Button, SplashBar } from '~/components'
 
+interface NewRoomFormData {
+  name: string
+}
+
 const NewRoom = (): JSX.Element => {
+  const { authenticated, user } = useAuth()
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting }
+  } = useForm<NewRoomFormData>()
+
+  const onSubmit = useCallback((data: NewRoomFormData) => {
+    console.log({ data })
+  }, [])
+
   return (
     <>
       <Head>
@@ -33,12 +60,25 @@ const NewRoom = (): JSX.Element => {
             align="stretch"
             textAlign="center"
           >
-            <Image alignSelf="center" src="/assets/logo.svg"></Image>
+            <Image alignSelf="center" src="/assets/logo.svg" />
+
+            {authenticated && (
+              <Flex align="center" justify="center" mt={4} mb={1}>
+                <Text mr={2}>
+                  Logado como <Text as="strong">{user?.displayName}</Text>
+                </Text>
+                <Avatar src={user?.photoURL ?? ''} />
+              </Flex>
+            )}
             <Heading as="h2" fontSize="3xl" mt="8" mb="4">
               Criar uma nova sala
             </Heading>
 
-            <Flex as="form" direction="column">
+            <Flex
+              as="form"
+              direction="column"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <Input
                 w="full"
                 h="50px"
@@ -48,11 +88,13 @@ const NewRoom = (): JSX.Element => {
                 border="1px"
                 borderColor="gray.400"
                 placeholder="Nome da sala"
+                {...register('name')}
               />
               <Button
                 type="submit"
                 bg="primary"
                 mt="1rem"
+                disabled={!authenticated || isSubmitting}
                 leftIcon={<Icon as={BiPlus} />}
               >
                 Criar sala
