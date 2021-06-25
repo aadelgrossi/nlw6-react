@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 import {
   Flex,
@@ -15,19 +15,22 @@ import { useForm } from 'react-hook-form'
 import { database, useAuth, UserInfo } from '~/auth'
 import { RoomCode, Button } from '~/components'
 import { QuestionsBadge, Unauthenticated } from '~/rooms'
+import { Question, Room } from '~/types'
 
 interface SingleRoomProps {
-  id: string
-  name: string
+  room: Room
 }
 
 type FormData = {
   content: string
 }
 
-const Room = ({ id }: SingleRoomProps): JSX.Element => {
+const SingleRoom = ({
+  room: { id, name, initialQuestions }
+}: SingleRoomProps): JSX.Element => {
   const { register, handleSubmit, reset } = useForm<FormData>()
   const { authenticated, user } = useAuth()
+  const [questions, setQuestions] = useState<Question[]>(initialQuestions)
   const toast = useToast()
 
   const onQuestionSubmit = useCallback(
@@ -88,8 +91,8 @@ const Room = ({ id }: SingleRoomProps): JSX.Element => {
           spacing={4}
           w="full"
         >
-          <Heading as="h1">Sala React</Heading>
-          <QuestionsBadge>4</QuestionsBadge>
+          <Heading as="h1">{name}</Heading>
+          <QuestionsBadge>{questions.length}</QuestionsBadge>
         </HStack>
 
         <Flex
@@ -134,9 +137,44 @@ const Room = ({ id }: SingleRoomProps): JSX.Element => {
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { id } = query
 
+  const roomRef = database.ref(`rooms/${id}`)
+
+  const roomInfo = await roomRef.once('value')
+
+  if (!roomInfo.exists()) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  const room = roomInfo.val()
+  const firebaseQuestions = room.questions ?? {}
+
+  const questions = Object.entries(firebaseQuestions).map(item => {
+    const [key, value] = item as [string, Question]
+
+    return {
+      id: key,
+      content: value.content,
+      author: value.author,
+      isHighlighted: value.isHighlighted,
+      isAnswered: value.isAnswered
+    }
+  })
+
   return {
-    props: { id }
+    props: {
+      room: {
+        id: roomInfo.key,
+        name: room.name,
+        authorId: room.authorId,
+        initialQuestions: questions
+      }
+    }
   }
 }
 
-export default Room
+export default SingleRoom
