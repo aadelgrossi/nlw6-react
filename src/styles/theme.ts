@@ -17,6 +17,13 @@ export const theme = extendTheme({
     heading: 'Poppins',
     body: 'Roboto'
   },
+  components: {
+    Button: {
+      baseStyle: {
+        fontWeight: 'medium'
+      }
+    }
+  },
   styles: {
     global: {
       body: {

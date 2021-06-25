@@ -120,7 +120,6 @@ const Room = ({ id }: SingleRoomProps): JSX.Element => {
               type="submit"
               bg="primary"
               color="white"
-              fontWeight="medium"
               disabled={!authenticated}
             >
               Enviar pergunta

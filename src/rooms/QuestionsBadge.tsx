@@ -11,7 +11,6 @@ export const QuestionsBadge = ({ children }: BadgeProps): JSX.Element => {
     <Badge
       px={4}
       py={2}
-      fontWeight="medium"
       textTransform="none"
       borderRadius="full"
       variant="solid"

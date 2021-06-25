@@ -16,7 +16,6 @@ const CustomButton: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   return (
     <ChakraButton
       ref={ref}
-      fontWeight="medium"
       transition="filter 0.2s"
       h="50px"
       borderRadius="lg"
