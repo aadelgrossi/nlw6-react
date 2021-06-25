@@ -32,10 +32,7 @@ const parseQuestions = (data: Record<string, Question>) =>
 
     return {
       id: key,
-      content: value.content,
-      author: value.author,
-      isHighlighted: value.isHighlighted,
-      isAnswered: value.isAnswered
+      ...value
     }
   })
 

@@ -4,7 +4,7 @@ export interface Author {
 }
 
 export interface Question {
-  id: string
+  id?: string
   author: Author
   content: string
   isAnswered: boolean
