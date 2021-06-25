@@ -1,9 +1,9 @@
-import { HStack, Avatar, Text } from '@chakra-ui/react'
+import { HStack, Avatar, Text, Button } from '@chakra-ui/react'
 
 import { useAuth } from './useAuth'
 
 export const UserInfo = (): JSX.Element => {
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
 
   return (
     <HStack as="span" fontSize="sm">
@@ -11,6 +11,10 @@ export const UserInfo = (): JSX.Element => {
       <Text fontWeight="medium" fontSize="md">
         {user?.displayName}
       </Text>
+
+      <Button size="sm" colorScheme="red" onClick={logout}>
+        Sair
+      </Button>
     </HStack>
   )
 }
