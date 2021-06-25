@@ -7,14 +7,12 @@ import {
   useState
 } from 'react'
 
-import { useRouter } from 'next/router'
-
 import { firebase, auth } from './firebase'
 import { removeTokenCookie, setTokenCookie } from './tokenCookies'
 
 interface AuthContextData {
   user: firebase.User | null
-  logout: () => void
+  logout: () => Promise<void>
   login: () => Promise<firebase.auth.UserCredential | undefined>
   authenticated: boolean
 }
@@ -23,13 +21,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export const AuthProvider: FC = ({ children }) => {
   const [user, setUser] = useState<firebase.User | null>(null)
-  const router = useRouter()
 
-  const logout = useCallback(() => {
-    auth.signOut().then(() => {
-      router.push('/')
-    })
-  }, [router])
+  const logout = useCallback(() => auth.signOut(), [])
 
   const login = useCallback(async (): Promise<
     firebase.auth.UserCredential | undefined
@@ -44,7 +37,6 @@ export const AuthProvider: FC = ({ children }) => {
       if (user) {
         const token = await user.getIdToken()
         setTokenCookie(token)
-
         setUser(user)
       } else {
         removeTokenCookie()
