@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import {
   Flex,
   Box,
@@ -6,18 +8,55 @@ import {
   Badge,
   HStack,
   VStack,
-  Textarea
+  Textarea,
+  useToast
 } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
+import { useForm } from 'react-hook-form'
 
+import { database, useAuth } from '~/auth'
 import { RoomCode, Button } from '~/components'
 
 interface SingleRoomProps {
-  name: string
   id: string
+  name: string
+}
+
+type FormData = {
+  content: string
 }
 
 const Room = ({ id }: SingleRoomProps): JSX.Element => {
+  const { register, handleSubmit } = useForm<FormData>()
+  const { authenticated, user } = useAuth()
+  const toast = useToast()
+
+  const onQuestionSubmit = useCallback(
+    async (data: FormData) => {
+      if (!authenticated) {
+        toast({
+          status: 'error',
+          title: 'Operação não autorizada',
+          description: 'Você precisa estar logado para fazer uma pergunta'
+        })
+        return
+      }
+
+      const question = {
+        ...data,
+        author: {
+          name: user?.displayName || '',
+          avatar: user?.photoURL || ''
+        },
+        isHighlighted: false,
+        isAnswered: false
+      }
+
+      await database.ref(`rooms/${id}/questions`).push(question)
+    },
+    [authenticated, toast, user, id]
+  )
+
   return (
     <Flex direction="column">
       <Flex as="header" p={6} border="1px solid #e2e2e2">
@@ -63,7 +102,12 @@ const Room = ({ id }: SingleRoomProps): JSX.Element => {
           </Badge>
         </HStack>
 
-        <Flex as="form" direction="column" w="full">
+        <Flex
+          as="form"
+          direction="column"
+          w="full"
+          onSubmit={handleSubmit(onQuestionSubmit)}
+        >
           <Textarea
             border="none"
             p={4}
@@ -73,6 +117,7 @@ const Room = ({ id }: SingleRoomProps): JSX.Element => {
             resize="vertical"
             minH="130px"
             placeholder="O que você quer perguntar?"
+            {...register('content', { required: true })}
           />
           <HStack
             mt={8}
@@ -97,6 +142,7 @@ const Room = ({ id }: SingleRoomProps): JSX.Element => {
               bg="primary"
               color="white"
               fontWeight="medium"
+              disabled={!authenticated}
             >
               Enviar pergunta
             </Button>
