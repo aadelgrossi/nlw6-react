@@ -2,10 +2,8 @@ import { useCallback } from 'react'
 
 import {
   Flex,
-  Box,
   Image,
   Heading,
-  Badge,
   HStack,
   VStack,
   Textarea,
@@ -14,8 +12,9 @@ import {
 import { GetServerSideProps } from 'next'
 import { useForm } from 'react-hook-form'
 
-import { database, useAuth } from '~/auth'
+import { database, useAuth, UserInfo } from '~/auth'
 import { RoomCode, Button } from '~/components'
+import { QuestionsBadge, Unauthenticated } from '~/rooms'
 
 interface SingleRoomProps {
   id: string
@@ -27,7 +26,7 @@ type FormData = {
 }
 
 const Room = ({ id }: SingleRoomProps): JSX.Element => {
-  const { register, handleSubmit } = useForm<FormData>()
+  const { register, handleSubmit, reset } = useForm<FormData>()
   const { authenticated, user } = useAuth()
   const toast = useToast()
 
@@ -53,8 +52,10 @@ const Room = ({ id }: SingleRoomProps): JSX.Element => {
       }
 
       await database.ref(`rooms/${id}/questions`).push(question)
+
+      reset()
     },
-    [authenticated, toast, user, id]
+    [authenticated, toast, user, id, reset]
   )
 
   return (
@@ -88,18 +89,7 @@ const Room = ({ id }: SingleRoomProps): JSX.Element => {
           w="full"
         >
           <Heading as="h1">Sala React</Heading>
-          <Badge
-            px={4}
-            py={2}
-            fontWeight="medium"
-            textTransform="none"
-            borderRadius="full"
-            variant="solid"
-            bg="secondary"
-            color="white"
-          >
-            4 perguntas
-          </Badge>
+          <QuestionsBadge>4</QuestionsBadge>
         </HStack>
 
         <Flex
@@ -125,18 +115,7 @@ const Room = ({ id }: SingleRoomProps): JSX.Element => {
             justify="space-between"
             align="center"
           >
-            <Box as="span" fontSize="sm">
-              Para enviar uma pergunta,{' '}
-              <Button
-                color="primary"
-                textDecoration="underline"
-                size="sm"
-                variant="link"
-                fontWeight="medium"
-              >
-                faça seu login
-              </Button>
-            </Box>
+            {authenticated ? <UserInfo /> : <Unauthenticated />}
             <Button
               type="submit"
               bg="primary"
