@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 
 import {
   Flex,
@@ -7,7 +7,8 @@ import {
   HStack,
   VStack,
   Textarea,
-  useToast
+  useToast,
+  Text
 } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { useForm } from 'react-hook-form'
@@ -25,6 +26,19 @@ type FormData = {
   content: string
 }
 
+const parseQuestions = (data: Record<string, Question>) =>
+  Object.entries(data).map(item => {
+    const [key, value] = item as [string, Question]
+
+    return {
+      id: key,
+      content: value.content,
+      author: value.author,
+      isHighlighted: value.isHighlighted,
+      isAnswered: value.isAnswered
+    }
+  })
+
 const SingleRoom = ({
   room: { id, name, initialQuestions }
 }: SingleRoomProps): JSX.Element => {
@@ -32,6 +46,19 @@ const SingleRoom = ({
   const { authenticated, user } = useAuth()
   const [questions, setQuestions] = useState<Question[]>(initialQuestions)
   const toast = useToast()
+
+  useEffect(() => {
+    const roomRef = database.ref(`rooms/${id}`)
+
+    roomRef.on('value', room => {
+      const databaseRoom = room.val()
+      const firebaseQuestions = databaseRoom.questions ?? {}
+
+      const newQuestions = parseQuestions(firebaseQuestions)
+
+      setQuestions(newQuestions)
+    })
+  }, [id])
 
   const onQuestionSubmit = useCallback(
     async (data: FormData) => {
@@ -129,6 +156,8 @@ const SingleRoom = ({
             </Button>
           </HStack>
         </Flex>
+
+        <Text>{JSON.stringify(questions)}</Text>
       </VStack>
     </Flex>
   )
@@ -153,17 +182,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const room = roomInfo.val()
   const firebaseQuestions = room.questions ?? {}
 
-  const questions = Object.entries(firebaseQuestions).map(item => {
-    const [key, value] = item as [string, Question]
-
-    return {
-      id: key,
-      content: value.content,
-      author: value.author,
-      isHighlighted: value.isHighlighted,
-      isAnswered: value.isAnswered
-    }
-  })
+  const questions = parseQuestions(firebaseQuestions)
 
   return {
     props: {
