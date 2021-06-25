@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useMemo } from 'react'
 
 import { Badge } from '@chakra-ui/react'
 
@@ -7,7 +7,12 @@ interface BadgeProps {
 }
 
 export const QuestionsBadge = ({ children }: BadgeProps): JSX.Element => {
-  return (
+  const numberOfQuestions = useMemo(
+    () => Number(children?.toString()),
+    [children]
+  )
+
+  return numberOfQuestions ? (
     <Badge
       px={4}
       py={2}
@@ -17,7 +22,9 @@ export const QuestionsBadge = ({ children }: BadgeProps): JSX.Element => {
       bg="secondary"
       color="white"
     >
-      {children} perguntas
+      {children} pergunta{numberOfQuestions > 1 ? 's' : ''}
     </Badge>
+  ) : (
+    <></>
   )
 }
