@@ -7,15 +7,18 @@ import {
   HStack,
   VStack,
   Textarea,
-  useToast,
-  Text
+  useToast
 } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { useForm } from 'react-hook-form'
 
 import { database, useAuth, UserInfo } from '~/auth'
 import { RoomCode, Button } from '~/components'
-import { QuestionsBadge, Unauthenticated } from '~/rooms'
+import {
+  Question as SingleQuestion,
+  QuestionsBadge,
+  Unauthenticated
+} from '~/rooms/components'
 import { Question, Room } from '~/types'
 
 interface SingleRoomProps {
@@ -106,7 +109,14 @@ const SingleRoom = ({
         </Flex>
       </Flex>
 
-      <VStack as="main" maxW="800px" m="0 auto" w="full" px={6}>
+      <Flex
+        as="main"
+        maxW="800px"
+        m="0 auto"
+        w="full"
+        px={6}
+        direction="column"
+      >
         <HStack
           id="room_title"
           mt={8}
@@ -154,8 +164,12 @@ const SingleRoom = ({
           </HStack>
         </Flex>
 
-        <Text>{JSON.stringify(questions)}</Text>
-      </VStack>
+        <VStack mt={10} spacing={4}>
+          {questions.map(question => (
+            <SingleQuestion key={question.id} data={question} />
+          ))}
+        </VStack>
+      </Flex>
     </Flex>
   )
 }
