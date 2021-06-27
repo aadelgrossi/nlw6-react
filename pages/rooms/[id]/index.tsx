@@ -19,7 +19,8 @@ import {
   QuestionCard,
   QuestionsBadge,
   Unauthenticated,
-  RoomCode
+  RoomCode,
+  NoQuestions
 } from '~/rooms/components'
 import { Room } from '~/types'
 
@@ -141,25 +142,29 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
           </HStack>
         </Flex>
 
-        <VStack mt={10} spacing={4}>
-          {questions.map(question => {
-            const { id, likeCount, likeId, isAnswered } = question
-            return (
-              <QuestionCard key={id} data={question}>
-                <HStack>
-                  {!isAnswered && (
-                    <Like
-                      liked={!!likeId}
-                      onClick={() => handleLikeClick(id, likeId)}
-                    >
-                      {likeCount}
-                    </Like>
-                  )}
-                </HStack>
-              </QuestionCard>
-            )
-          })}
-        </VStack>
+        {!questions.length ? (
+          <NoQuestions />
+        ) : (
+          <VStack mt={10} spacing={4}>
+            {questions.map(question => {
+              const { id, likeCount, likeId, isAnswered } = question
+              return (
+                <QuestionCard key={id} data={question}>
+                  <HStack>
+                    {!isAnswered && (
+                      <Like
+                        liked={!!likeId}
+                        onClick={() => handleLikeClick(id, likeId)}
+                      >
+                        {likeCount}
+                      </Like>
+                    )}
+                  </HStack>
+                </QuestionCard>
+              )
+            })}
+          </VStack>
+        )}
       </Flex>
     </Flex>
   )
