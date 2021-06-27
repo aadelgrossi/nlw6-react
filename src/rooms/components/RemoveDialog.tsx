@@ -27,9 +27,9 @@ export const RemoveDialog = ({ confirm }: DialogProps): JSX.Element => {
       <IconButton
         variant="ghost"
         _hover={{ background: 'none' }}
-        aria-label="like"
+        aria-label="remove"
         onClick={onOpen}
-        icon={<Icon w={5} h={5} color="gray.500" as={FiTrash} />}
+        icon={<Icon color="gray.500" as={FiTrash} />}
       />
 
       <Modal isOpen={isOpen} onClose={onClose}>
