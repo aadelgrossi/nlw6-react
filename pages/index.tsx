@@ -30,21 +30,32 @@ const IndexPage = (): JSX.Element => {
     async ({ id }: JoinRoomFormData) => {
       const room = await database.ref(`rooms/${id}`).get()
 
-      if (room.exists()) {
-        router.push(`/rooms/${id}`)
-        toast({
-          title: 'Seja bem-vindo',
-          status: 'success',
-          position: 'top-right'
-        })
-      } else {
+      if (!room.exists()) {
         toast({
           title: 'Sala não encontrada',
           description: 'Favor verifique o código da sala',
           status: 'error',
           position: 'top-right'
         })
+        return
       }
+
+      if (room.val().closedAt) {
+        toast({
+          title: 'Sala encerrada',
+          description: 'Esta sala não está mais ativa.',
+          status: 'error',
+          position: 'top-right'
+        })
+        return
+      }
+
+      router.push(`/rooms/${id}`)
+      toast({
+        title: 'Seja bem-vindo',
+        status: 'success',
+        position: 'top-right'
+      })
     },
     [toast, router]
   )
