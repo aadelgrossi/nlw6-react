@@ -8,10 +8,13 @@ export interface QuestionInput {
   content: string
   isAnswered: boolean
   isHighlighted: boolean
+  likes: Record<string, { authorId: string }>
 }
 
 export interface Question extends QuestionInput {
   id: string
+  hasLiked: boolean
+  likeCount: number
 }
 
 export interface Room {
