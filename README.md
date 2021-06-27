@@ -1,14 +1,9 @@
 <h1 align="center">
-  <img width="400px alt="LetMeAsk" title="LetMeAsk" src=".github/logo.png" />
+  <img width="280px" alt="LetMeAsk" title="LetMeAsk" src=".github/logo.png" />
 </h1>
 
 
-![Badge](https://img.shields.io/github/license/aadelgrossi/nlw6-react?style=flat&label=LICENSE&color=835afd&labelColor=2a292e)
-![Badge](https://img.shields.io/badge/REACT-17-blue?style=flat&color=298BF9&labelColor=000000&logo=react)
-![Badge](https://img.shields.io/badge/ChakraUI-v8.6.8-blue?style=flat&logo=Firebase&color=298BF9&labelColor=000000)
-
-
-# :interrobang: About
+# :computer: About
 
 LetMeAsk is a realtime Q&A application developed as the project for the React path during Rocketseat's Next Level Week 6th edition. 
 
@@ -19,7 +14,7 @@ LetMeAsk is a realtime Q&A application developed as the project for the React pa
 ![Badge](https://img.shields.io/badge/-chakraUI-efefef?style=for-the-badge&logo=chakraui&logoColor=319795)
 ![Badge](https://img.shields.io/badge/-nextjs-f3f3f3?style=for-the-badge&logo=next.js&logoColor=000)
 
-# :rocket: Executando a aplicação
+# :rocket: Running the app
 
 Clone the repo by running on your terminal
 
@@ -60,5 +55,5 @@ Point your browser to [`localhost:3000`](http://localhost:3000).
 - [] Deploy + live demo
 
 
-[MIT License](https://github.com/aadelgrossi/nlw6-react/blob/main/LICENSE.md) ® [Andre Grossi](https://github.com/aadelgrossi)
+[MIT License](https://github.com/aadelgrossi/nlw6-react/LICENSE) ® [Andre Grossi](https://github.com/aadelgrossi)
 
