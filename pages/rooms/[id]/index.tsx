@@ -70,10 +70,16 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
   )
 
   const handleLikeClick = useCallback(
-    async (questionId: string) => {
-      await database.ref(`rooms/${id}/questions/${questionId}/likes`).push({
-        authorId: user?.uid
-      })
+    async (questionId: string, likeId: string | undefined) => {
+      if (likeId) {
+        await database
+          .ref(`rooms/${id}/questions/${questionId}/likes/${likeId}`)
+          .remove()
+      } else {
+        await database.ref(`rooms/${id}/questions/${questionId}/likes`).push({
+          authorId: user?.uid
+        })
+      }
     },
     [id, user?.uid]
   )
@@ -156,7 +162,7 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
 
         <VStack mt={10} spacing={4}>
           {questions.map(question => {
-            const { id, hasLiked, likeCount } = question
+            const { id, likeCount, likeId } = question
             return (
               <SingleQuestion key={id} data={question}>
                 <HStack>
@@ -165,13 +171,13 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
                     variant="ghost"
                     _hover={{ background: 'none' }}
                     aria-label="like"
-                    onClick={() => handleLikeClick(id)}
+                    onClick={() => handleLikeClick(id, likeId)}
                     icon={
                       <Icon
                         w={5}
                         h={5}
-                        color={hasLiked ? 'primary' : 'gray.500'}
-                        as={hasLiked ? AiFillLike : AiOutlineLike}
+                        color={likeId ? 'primary' : 'gray.500'}
+                        as={likeId ? AiFillLike : AiOutlineLike}
                       />
                     }
                   />

@@ -13,7 +13,7 @@ export interface QuestionInput {
 
 export interface Question extends QuestionInput {
   id: string
-  hasLiked: boolean
+  likeId?: string
   likeCount: number
 }
 

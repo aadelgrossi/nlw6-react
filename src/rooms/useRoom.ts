@@ -17,14 +17,14 @@ const useRoom = (roomId: string): RoomHookData => {
         const [key, value] = item as [string, QuestionInput]
 
         const likeCount = Object.values(value.likes ?? {}).length
-        const hasLiked = Object.values(value.likes ?? {}).some(
-          like => like.authorId === user?.uid
-        )
+        const likeId = Object.entries(value.likes ?? {}).find(
+          ([_, like]) => like.authorId === user?.uid
+        )?.[0]
 
         return {
           id: key,
           likeCount,
-          hasLiked,
+          likeId,
           ...value
         }
       }),
