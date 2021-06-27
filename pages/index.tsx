@@ -7,9 +7,8 @@ import { useForm } from 'react-hook-form'
 import { CgLogIn } from 'react-icons/cg'
 import { ImGoogle } from 'react-icons/im'
 
-import { useAuth } from '~/auth'
+import { database, useAuth } from '~/auth'
 import { Separator, Button, SplashBar } from '~/components'
-import { useRoom } from '~/rooms'
 
 type JoinRoomFormData = { id: string }
 
@@ -17,7 +16,6 @@ const IndexPage = (): JSX.Element => {
   const { login, user } = useAuth()
   const router = useRouter()
   const { register, handleSubmit } = useForm<JoinRoomFormData>()
-  const { joinRoom } = useRoom()
   const toast = useToast()
 
   const handleCreateRoom = useCallback(async () => {
@@ -29,16 +27,17 @@ const IndexPage = (): JSX.Element => {
   }, [login, router, user])
 
   const onSubmit = useCallback(
-    ({ id }: JoinRoomFormData) => {
-      try {
-        joinRoom(id)
+    async ({ id }: JoinRoomFormData) => {
+      const room = await database.ref(`rooms/${id}`).get()
+
+      if (room.exists()) {
         router.push(`/rooms/${id}`)
         toast({
           title: 'Seja bem-vindo',
           status: 'success',
           position: 'top-right'
         })
-      } catch (e) {
+      } else {
         toast({
           title: 'Sala não encontrada',
           description: 'Favor verifique o código da sala',
@@ -47,7 +46,7 @@ const IndexPage = (): JSX.Element => {
         })
       }
     },
-    [joinRoom, toast, router]
+    [toast, router]
   )
 
   return (

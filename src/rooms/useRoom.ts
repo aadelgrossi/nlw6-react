@@ -1,37 +1,30 @@
-import { useCallback } from 'react'
+import { useEffect, useState } from 'react'
 
-import { database, firebase } from '~/auth'
+import { database } from '~/auth'
+import { Question } from '~/types'
 
-import { CreateRoomData } from './types'
+import { parseQuestions } from './parseQuestions'
 
 interface RoomHookData {
-  createRoom: (
-    data: CreateRoomData
-  ) => Promise<firebase.database.ThenableReference>
-  joinRoom: (id: string) => Promise<void>
+  questions: Question[]
 }
 
-const useRoom = (): RoomHookData => {
-  const createRoom = useCallback(
-    async (
-      data: CreateRoomData
-    ): Promise<firebase.database.ThenableReference> => {
-      const roomRef = database.ref('rooms')
+const useRoom = (roomId: string): RoomHookData => {
+  const [questions, setQuestions] = useState<Question[]>([])
 
-      return roomRef.push({ ...data, createdAt: new Date() })
-    },
-    []
-  )
+  useEffect(() => {
+    const roomRef = database.ref(`rooms/${roomId}`)
 
-  const joinRoom = useCallback(async (id: string): Promise<void> => {
-    const roomRef = await database.ref(`rooms/${id}`).get()
+    roomRef.on('value', room => {
+      const databaseRoom = room.val()
+      const firebaseQuestions = databaseRoom.questions ?? {}
+      const newQuestions = parseQuestions(firebaseQuestions)
 
-    if (!roomRef.exists()) {
-      throw new Error()
-    }
-  }, [])
+      setQuestions(newQuestions)
+    })
+  }, [roomId])
 
-  return { createRoom, joinRoom }
+  return { questions }
 }
 
 export { useRoom }

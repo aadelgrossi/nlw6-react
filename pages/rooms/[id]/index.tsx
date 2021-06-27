@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback } from 'react'
 
 import {
   Flex,
@@ -14,12 +14,13 @@ import { useForm } from 'react-hook-form'
 
 import { database, useAuth, UserInfo } from '~/auth'
 import { RoomCode, Button } from '~/components'
+import { useRoom } from '~/rooms'
 import {
   Question as SingleQuestion,
   QuestionsBadge,
   Unauthenticated
 } from '~/rooms/components'
-import { Question, Room } from '~/types'
+import { Room } from '~/types'
 
 interface SingleRoomProps {
   room: Room
@@ -29,36 +30,11 @@ type FormData = {
   content: string
 }
 
-const parseQuestions = (data: Record<string, Question>) =>
-  Object.entries(data).map(item => {
-    const [key, value] = item as [string, Question]
-
-    return {
-      id: key,
-      ...value
-    }
-  })
-
-const SingleRoom = ({
-  room: { id, name, initialQuestions }
-}: SingleRoomProps): JSX.Element => {
+const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
   const { register, handleSubmit, reset } = useForm<FormData>()
   const { authenticated, user } = useAuth()
-  const [questions, setQuestions] = useState<Question[]>(initialQuestions)
+  const { questions } = useRoom(id)
   const toast = useToast()
-
-  useEffect(() => {
-    const roomRef = database.ref(`rooms/${id}`)
-
-    roomRef.on('value', room => {
-      const databaseRoom = room.val()
-      const firebaseQuestions = databaseRoom.questions ?? {}
-
-      const newQuestions = parseQuestions(firebaseQuestions)
-
-      setQuestions(newQuestions)
-    })
-  }, [id])
 
   const onQuestionSubmit = useCallback(
     async (data: FormData) => {
@@ -191,17 +167,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }
 
   const room = roomInfo.val()
-  const firebaseQuestions = room.questions ?? {}
-
-  const questions = parseQuestions(firebaseQuestions)
 
   return {
     props: {
       room: {
         id: roomInfo.key,
         name: room.name,
-        authorId: room.authorId,
-        initialQuestions: questions
+        authorId: room.authorId
       }
     }
   }

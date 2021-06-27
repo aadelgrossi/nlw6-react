@@ -15,9 +15,9 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { BiPlus } from 'react-icons/bi'
 
-import { useAuth } from '~/auth/useAuth'
+import { database, useAuth } from '~/auth'
 import { Button, SplashBar } from '~/components'
-import { useRoom, CreateRoomData } from '~/rooms'
+import { CreateRoomData } from '~/rooms'
 
 const NewRoom = (): JSX.Element => {
   const { authenticated, user } = useAuth()
@@ -26,21 +26,23 @@ const NewRoom = (): JSX.Element => {
     handleSubmit,
     formState: { isSubmitting }
   } = useForm<CreateRoomData>()
-  const { createRoom } = useRoom()
   const router = useRouter()
 
   const onSubmit = useCallback(
     async (data: CreateRoomData) => {
       if (user) {
-        const newRoom = await createRoom({
+        const roomRef = database.ref('rooms')
+
+        const newRoom = roomRef.push({
+          ...data,
           authorId: user.uid,
-          name: data.name
+          createdAt: new Date()
         })
 
         router.push(`/rooms/${newRoom.key}`)
       }
     },
-    [createRoom, user, router]
+    [user, router]
   )
 
   return (
