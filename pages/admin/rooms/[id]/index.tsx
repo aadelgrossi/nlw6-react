@@ -1,8 +1,8 @@
-import { Flex, Image, Heading, HStack, VStack, Text } from '@chakra-ui/react'
+import { Flex, Heading, HStack, VStack, Text } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 
 import { database } from '~/auth'
-import { Button } from '~/components'
+import { Button, Header } from '~/components'
 import { useRoom } from '~/rooms'
 import {
   Question as SingleQuestion,
@@ -25,35 +25,18 @@ const AdminRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
 
   return (
     <Flex direction="column">
-      <Flex as="header" p={6} border="1px solid #e2e2e2">
-        <Flex
-          id="content"
-          w="full"
-          maxW="1120px"
-          m="0 auto"
-          justify="space-between"
-          align="center"
+      <Header>
+        <RoomCode>{id}</RoomCode>
+        <Button
+          h="40px"
+          borderColor="primary"
+          color="primary"
+          borderRadius="md"
+          variant="outline"
         >
-          <Image
-            maxH={12}
-            alt="LetMeAsk"
-            alignSelf="center"
-            src="/assets/logo.svg"
-          />
-          <HStack>
-            <RoomCode>{id}</RoomCode>
-            <Button
-              h="40px"
-              borderColor="primary"
-              color="primary"
-              borderRadius="md"
-              variant="outline"
-            >
-              Encerrar sala
-            </Button>
-          </HStack>
-        </Flex>
-      </Flex>
+          Encerrar sala
+        </Button>
+      </Header>
 
       <Flex
         as="main"

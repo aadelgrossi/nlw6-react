@@ -2,7 +2,6 @@ import { useCallback } from 'react'
 
 import {
   Flex,
-  Image,
   Heading,
   HStack,
   VStack,
@@ -17,7 +16,7 @@ import { useForm } from 'react-hook-form'
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 
 import { database, useAuth, UserInfo } from '~/auth'
-import { Button } from '~/components'
+import { Button, Header } from '~/components'
 import { useRoom } from '~/rooms'
 import {
   Question as SingleQuestion,
@@ -86,24 +85,9 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
 
   return (
     <Flex direction="column">
-      <Flex as="header" p={6} border="1px solid #e2e2e2">
-        <Flex
-          id="content"
-          w="full"
-          maxW="1120px"
-          m="0 auto"
-          justify="space-between"
-          align="center"
-        >
-          <Image
-            maxH={12}
-            alt="LetMeAsk"
-            alignSelf="center"
-            src="/assets/logo.svg"
-          />
-          <RoomCode>{id}</RoomCode>
-        </Flex>
-      </Flex>
+      <Header>
+        <RoomCode>{id}</RoomCode>
+      </Header>
 
       <Flex
         as="main"
