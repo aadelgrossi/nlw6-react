@@ -22,8 +22,14 @@ export const RoomCode = ({ children }: RoomCodeProps): JSX.Element => {
       >
         <Image src="/assets/copy.svg" />
       </Button>
-      <Button p={4} borderWidth="1px" borderColor="primary" variant="ghost">
-        Sala: {children}
+      <Button
+        w="full"
+        p={4}
+        borderWidth="1px"
+        borderColor="primary"
+        variant="ghost"
+      >
+        {children}
       </Button>
     </ButtonGroup>
   )
