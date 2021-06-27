@@ -1,6 +1,18 @@
-import { Flex, Heading, HStack, VStack, Text } from '@chakra-ui/react'
+import { useCallback } from 'react'
+
+import {
+  Flex,
+  Heading,
+  HStack,
+  VStack,
+  Text,
+  IconButton,
+  Icon
+} from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
+import { FaRegCommentAlt, FaCommentAlt } from 'react-icons/fa'
+import { HiOutlineCheckCircle, HiCheckCircle } from 'react-icons/hi'
 
 import { database } from '~/auth'
 import { Header } from '~/components'
@@ -34,6 +46,24 @@ const AdminRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
     router.push('/')
   }
 
+  const handleMarkAnswered = useCallback(
+    async (questionId: string) => {
+      await database.ref(`rooms/${id}/questions/${questionId}`).update({
+        isAnswered: true
+      })
+    },
+    [id]
+  )
+
+  const handleMarkHighlighted = useCallback(
+    async (questionId: string) => {
+      await database.ref(`rooms/${id}/questions/${questionId}`).update({
+        isHighlighted: true
+      })
+    },
+    [id]
+  )
+
   return (
     <Flex direction="column">
       <Header>
@@ -63,11 +93,49 @@ const AdminRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
 
         <VStack mt={10} spacing={4}>
           {questions.map(question => {
-            const { id, likeCount } = question
+            const { id, likeCount, isAnswered, isHighlighted } = question
             return (
               <SingleQuestion key={id} data={question}>
-                <HStack>
-                  {likeCount > 0 && <Text as="span">{likeCount}</Text>}
+                <HStack spacing={0}>
+                  {likeCount > 0 && (
+                    <Text color="gray.500" as="span">
+                      {likeCount} like(s)
+                    </Text>
+                  )}
+                  {!isAnswered && (
+                    <>
+                      <IconButton
+                        variant="ghost"
+                        _hover={{ background: 'none' }}
+                        aria-label="mark-answered"
+                        onClick={() => handleMarkAnswered(id)}
+                        icon={
+                          <Icon
+                            w={5}
+                            h={5}
+                            color={isAnswered ? 'primary' : 'gray.500'}
+                            as={
+                              isAnswered ? HiCheckCircle : HiOutlineCheckCircle
+                            }
+                          />
+                        }
+                      />
+                      <IconButton
+                        variant="ghost"
+                        _hover={{ background: 'none' }}
+                        aria-label="highlight"
+                        onClick={() => handleMarkHighlighted(id)}
+                        icon={
+                          <Icon
+                            w={4}
+                            h={4}
+                            color={isHighlighted ? 'primary' : 'gray.500'}
+                            as={isHighlighted ? FaCommentAlt : FaRegCommentAlt}
+                          />
+                        }
+                      />
+                    </>
+                  )}
                   <RemoveDialog confirm={() => handleDeleteQuestion(id)} />
                 </HStack>
               </SingleQuestion>

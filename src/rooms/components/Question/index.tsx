@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useMemo } from 'react'
 
 import { Flex, Text } from '@chakra-ui/react'
 
@@ -12,14 +12,21 @@ interface QuestionProps {
 }
 
 export const Question = ({
-  data: { content, author },
+  data: { content, author, isAnswered, isHighlighted },
   children
 }: QuestionProps): JSX.Element => {
+  const background = useMemo(
+    () => (isAnswered ? 'gray.300' : isHighlighted ? 'lilac' : 'reallywhite'),
+    [isAnswered, isHighlighted]
+  )
+
   return (
     <Flex
       w="full"
-      bg="reallywhite"
+      bg={background}
+      opacity={isAnswered ? 0.7 : 1}
       borderRadius="md"
+      border={isHighlighted && !isAnswered ? '2px solid #835afd' : 'none'}
       boxShadow="md"
       direction="column"
       p={6}

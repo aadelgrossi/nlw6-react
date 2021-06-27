@@ -6,6 +6,7 @@ export const theme = extendTheme({
     reallywhite: '#fefefe',
     text: '#2a292e',
     primary: '#835afd',
+    lilac: '#F4F0FF',
     secondary: '#e559f9',
     danger: '#E73F5D',
     gray: {
