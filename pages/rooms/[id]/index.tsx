@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
   Flex,
@@ -7,18 +7,23 @@ import {
   HStack,
   VStack,
   Textarea,
-  useToast
+  useToast,
+  Text,
+  IconButton,
+  Icon
 } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { useForm } from 'react-hook-form'
+import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 
 import { database, useAuth, UserInfo } from '~/auth'
-import { RoomCode, Button } from '~/components'
+import { Button } from '~/components'
 import { useRoom } from '~/rooms'
 import {
   Question as SingleQuestion,
   QuestionsBadge,
-  Unauthenticated
+  Unauthenticated,
+  RoomCode
 } from '~/rooms/components'
 import { Room } from '~/types'
 
@@ -62,6 +67,17 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
       reset()
     },
     [authenticated, toast, user, id, reset]
+  )
+
+  const isQuestionLiked = useMemo(() => true, [])
+
+  const handleLikeClick = useCallback(
+    async (questionId: string) => {
+      await database.ref(`rooms/${id}/questions/${questionId}/likes`).push({
+        authorId: user?.uid
+      })
+    },
+    [id, user?.uid]
   )
 
   return (
@@ -142,7 +158,25 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
 
         <VStack mt={10} spacing={4}>
           {questions.map(question => (
-            <SingleQuestion key={question.id} data={question} />
+            <SingleQuestion key={question.id} data={question}>
+              <HStack>
+                <Text as="span">10</Text>
+                <IconButton
+                  variant="ghost"
+                  _hover={{ background: 'none' }}
+                  aria-label="like"
+                  onClick={() => handleLikeClick(question.id)}
+                  icon={
+                    <Icon
+                      w={5}
+                      h={5}
+                      color={isQuestionLiked ? 'primary' : 'gray.500'}
+                      as={isQuestionLiked ? AiFillLike : AiOutlineLike}
+                    />
+                  }
+                />
+              </HStack>
+            </SingleQuestion>
           ))}
         </VStack>
       </Flex>
