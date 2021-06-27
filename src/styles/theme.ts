@@ -7,7 +7,9 @@ export const theme = extendTheme({
     text: '#2a292e',
     primary: '#835afd',
     secondary: '#e559f9',
+    danger: '#E73F5D',
     gray: {
+      300: '#DBDCDD',
       400: '#a8a8b3',
       500: '#737380'
     },
