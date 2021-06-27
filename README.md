@@ -27,7 +27,7 @@ Install dependencies running:
 $ yarn install
 ```
 
-Configure the following environment variables (use .env.example for reference). You must create a Firebase account along with a new project, enabling Authentication and Realtime Database services
+Configure the following environment variables (use [.env.example](https://github.com/aadelgrossi/nlw6-react/blob/main/.env.example) for reference). You must create a Firebase account along with a new project, enabling Authentication and Realtime Database services
 
 ```
 NEXT_PUBLIC_FIREBASE_API_KEY=
@@ -55,5 +55,5 @@ Point your browser to [`localhost:3000`](http://localhost:3000).
 - [] Deploy + live demo
 
 
-[MIT License](https://github.com/aadelgrossi/nlw6-react/LICENSE) ® [Andre Grossi](https://github.com/aadelgrossi)
+[MIT License](https://github.com/aadelgrossi/nlw6-react/blob/main/LICENSE) ® [Andre Grossi](https://github.com/aadelgrossi)
 
