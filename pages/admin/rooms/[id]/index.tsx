@@ -1,10 +1,12 @@
 import { Flex, Heading, HStack, VStack, Text } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 
 import { database } from '~/auth'
-import { Button, Header } from '~/components'
+import { Header } from '~/components'
 import { useRoom } from '~/rooms'
 import {
+  CloseRoomDialog,
   Question as SingleQuestion,
   QuestionsBadge,
   RemoveDialog,
@@ -18,24 +20,25 @@ interface SingleRoomProps {
 
 const AdminRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
   const { questions } = useRoom(id)
+  const router = useRouter()
 
   const handleDeleteQuestion = async (questionId: string) => {
     await database.ref(`rooms/${id}/questions/${questionId}`).remove()
+  }
+
+  const handleCloseRoom = async () => {
+    await database.ref(`rooms/${id}`).update({
+      closedAt: new Date()
+    })
+
+    router.push('/')
   }
 
   return (
     <Flex direction="column">
       <Header>
         <RoomCode>{id}</RoomCode>
-        <Button
-          h="40px"
-          borderColor="primary"
-          color="primary"
-          borderRadius="md"
-          variant="outline"
-        >
-          Encerrar sala
-        </Button>
+        <CloseRoomDialog confirm={handleCloseRoom} />
       </Header>
 
       <Flex

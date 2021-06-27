@@ -1,5 +1,6 @@
 export * from './QuestionsBadge'
 export * from './Unauthenticated'
+export * from './CloseRoomDialog'
 export * from './Question'
 export * from './RoomCode'
 export * from './RemoveDialog'

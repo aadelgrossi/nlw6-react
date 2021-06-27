@@ -22,4 +22,5 @@ export interface Room {
   name: string
   authorId: string
   initialQuestions: Question[]
+  closedAt?: Date
 }
