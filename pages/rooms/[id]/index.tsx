@@ -156,11 +156,11 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
 
         <VStack mt={10} spacing={4}>
           {questions.map(question => {
-            const { id, hasLiked } = question
+            const { id, hasLiked, likeCount } = question
             return (
               <SingleQuestion key={id} data={question}>
                 <HStack>
-                  <Text as="span">10</Text>
+                  {likeCount > 0 && <Text as="span">{likeCount}</Text>}
                   <IconButton
                     variant="ghost"
                     _hover={{ background: 'none' }}
