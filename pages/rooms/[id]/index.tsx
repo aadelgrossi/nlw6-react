@@ -8,7 +8,6 @@ import {
   Textarea,
   useToast,
   Text,
-  IconButton,
   Icon
 } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
@@ -146,25 +145,29 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
 
         <VStack mt={10} spacing={4}>
           {questions.map(question => {
-            const { id, likeCount, likeId } = question
+            const { id, likeCount, likeId, isAnswered } = question
             return (
               <SingleQuestion key={id} data={question}>
                 <HStack>
-                  {likeCount > 0 && <Text as="span">{likeCount}</Text>}
-                  <IconButton
-                    variant="ghost"
-                    _hover={{ background: 'none' }}
-                    aria-label="like"
-                    onClick={() => handleLikeClick(id, likeId)}
-                    icon={
-                      <Icon
-                        w={5}
-                        h={5}
-                        color={likeId ? 'primary' : 'gray.500'}
-                        as={likeId ? AiFillLike : AiOutlineLike}
-                      />
-                    }
-                  />
+                  {!isAnswered && (
+                    <Button
+                      variant="ghost"
+                      _hover={{ background: 'none' }}
+                      aria-label="like"
+                      onClick={() => handleLikeClick(id, likeId)}
+                      color={likeId ? 'primary' : 'gray.500'}
+                      rightIcon={
+                        <Icon
+                          w={5}
+                          h={5}
+                          color={likeId ? 'primary' : 'gray.500'}
+                          as={likeId ? AiFillLike : AiOutlineLike}
+                        />
+                      }
+                    >
+                      {likeCount > 0 && <Text as="span">{likeCount}</Text>}
+                    </Button>
+                  )}
                 </HStack>
               </SingleQuestion>
             )
