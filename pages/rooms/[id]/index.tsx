@@ -6,19 +6,17 @@ import {
   HStack,
   VStack,
   Textarea,
-  useToast,
-  Text,
-  Icon
+  useToast
 } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { useForm } from 'react-hook-form'
-import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 
 import { database, useAuth, UserInfo } from '~/auth'
 import { Button, Header } from '~/components'
+import { Like } from '~/question/controls'
 import { useRoom } from '~/rooms'
 import {
-  Question as SingleQuestion,
+  QuestionCard,
   QuestionsBadge,
   Unauthenticated,
   RoomCode
@@ -147,29 +145,18 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
           {questions.map(question => {
             const { id, likeCount, likeId, isAnswered } = question
             return (
-              <SingleQuestion key={id} data={question}>
+              <QuestionCard key={id} data={question}>
                 <HStack>
                   {!isAnswered && (
-                    <Button
-                      variant="ghost"
-                      _hover={{ background: 'none' }}
-                      aria-label="like"
+                    <Like
+                      liked={!!likeId}
                       onClick={() => handleLikeClick(id, likeId)}
-                      color={likeId ? 'primary' : 'gray.500'}
-                      rightIcon={
-                        <Icon
-                          w={5}
-                          h={5}
-                          color={likeId ? 'primary' : 'gray.500'}
-                          as={likeId ? AiFillLike : AiOutlineLike}
-                        />
-                      }
                     >
-                      {likeCount > 0 && <Text as="span">{likeCount}</Text>}
-                    </Button>
+                      {likeCount}
+                    </Like>
                   )}
                 </HStack>
-              </SingleQuestion>
+              </QuestionCard>
             )
           })}
         </VStack>

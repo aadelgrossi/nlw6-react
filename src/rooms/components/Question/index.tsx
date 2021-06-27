@@ -11,7 +11,7 @@ interface QuestionProps {
   children: ReactNode
 }
 
-export const Question = ({
+export const QuestionCard = ({
   data: { content, author, isAnswered, isHighlighted },
   children
 }: QuestionProps): JSX.Element => {
