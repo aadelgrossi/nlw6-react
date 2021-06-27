@@ -1,10 +1,15 @@
-import { Flex, Image, Heading, HStack, VStack } from '@chakra-ui/react'
+import { Flex, Image, Heading, HStack, VStack, Text } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 
 import { database } from '~/auth'
-import { RoomCode, Button } from '~/components'
+import { Button } from '~/components'
 import { useRoom } from '~/rooms'
-import { Question as SingleQuestion, QuestionsBadge } from '~/rooms/components'
+import {
+  Question as SingleQuestion,
+  QuestionsBadge,
+  RemoveDialog,
+  RoomCode
+} from '~/rooms/components'
 import { Room } from '~/types'
 
 interface SingleRoomProps {
@@ -13,6 +18,10 @@ interface SingleRoomProps {
 
 const AdminRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
   const { questions } = useRoom(id)
+
+  const handleDeleteQuestion = async (questionId: string) => {
+    await database.ref(`rooms/${id}/questions/${questionId}`).remove()
+  }
 
   return (
     <Flex direction="column">
@@ -67,9 +76,17 @@ const AdminRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
         </HStack>
 
         <VStack mt={10} spacing={4}>
-          {questions.map(question => (
-            <SingleQuestion key={question.id} data={question} />
-          ))}
+          {questions.map(question => {
+            const { id, likeCount } = question
+            return (
+              <SingleQuestion key={id} data={question}>
+                <HStack>
+                  {likeCount > 0 && <Text as="span">{likeCount}</Text>}
+                  <RemoveDialog confirm={() => handleDeleteQuestion(id)} />
+                </HStack>
+              </SingleQuestion>
+            )
+          })}
         </VStack>
       </Flex>
     </Flex>
@@ -78,9 +95,7 @@ const AdminRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { id } = query
-
   const roomRef = database.ref(`rooms/${id}`)
-
   const roomInfo = await roomRef.once('value')
 
   if (!roomInfo.exists()) {
