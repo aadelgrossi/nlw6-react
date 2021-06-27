@@ -3,12 +3,15 @@ export interface Author {
   avatar: string
 }
 
-export interface Question {
-  id?: string
+export interface QuestionInput {
   author: Author
   content: string
   isAnswered: boolean
   isHighlighted: boolean
+}
+
+export interface Question extends QuestionInput {
+  id: string
 }
 
 export interface Room {
