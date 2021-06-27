@@ -1,6 +1,7 @@
 import { ReactNode, useCallback } from 'react'
 
-import { ButtonGroup, Button, Image } from '@chakra-ui/react'
+import { ButtonGroup, Button, Icon } from '@chakra-ui/react'
+import { FiCopy } from 'react-icons/fi'
 
 interface RoomCodeProps {
   children: ReactNode
@@ -20,7 +21,7 @@ export const RoomCode = ({ children }: RoomCodeProps): JSX.Element => {
         borderWidth="1px"
         borderColor="primary"
       >
-        <Image src="/assets/copy.svg" />
+        <Icon color="white" as={FiCopy} w={5} h={5} />
       </Button>
       <Button
         w="full"
