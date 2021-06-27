@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 
 import {
   Flex,
@@ -68,8 +68,6 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
     },
     [authenticated, toast, user, id, reset]
   )
-
-  const isQuestionLiked = useMemo(() => true, [])
 
   const handleLikeClick = useCallback(
     async (questionId: string) => {
@@ -157,27 +155,30 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
         </Flex>
 
         <VStack mt={10} spacing={4}>
-          {questions.map(question => (
-            <SingleQuestion key={question.id} data={question}>
-              <HStack>
-                <Text as="span">10</Text>
-                <IconButton
-                  variant="ghost"
-                  _hover={{ background: 'none' }}
-                  aria-label="like"
-                  onClick={() => handleLikeClick(question.id)}
-                  icon={
-                    <Icon
-                      w={5}
-                      h={5}
-                      color={isQuestionLiked ? 'primary' : 'gray.500'}
-                      as={isQuestionLiked ? AiFillLike : AiOutlineLike}
-                    />
-                  }
-                />
-              </HStack>
-            </SingleQuestion>
-          ))}
+          {questions.map(question => {
+            const { id, hasLiked } = question
+            return (
+              <SingleQuestion key={id} data={question}>
+                <HStack>
+                  <Text as="span">10</Text>
+                  <IconButton
+                    variant="ghost"
+                    _hover={{ background: 'none' }}
+                    aria-label="like"
+                    onClick={() => handleLikeClick(id)}
+                    icon={
+                      <Icon
+                        w={5}
+                        h={5}
+                        color={hasLiked ? 'primary' : 'gray.500'}
+                        as={hasLiked ? AiFillLike : AiOutlineLike}
+                      />
+                    }
+                  />
+                </HStack>
+              </SingleQuestion>
+            )
+          })}
         </VStack>
       </Flex>
     </Flex>
