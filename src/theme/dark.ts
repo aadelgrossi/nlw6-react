@@ -1,19 +1,23 @@
 import { extendTheme } from '@chakra-ui/react'
 
-export const theme = extendTheme({
+export const dark = extendTheme({
   colors: {
-    white: '#f8f8f8',
-    reallywhite: '#fefefe',
-    text: '#2a292e',
+    background: {
+      400: '#0e0e0e',
+      500: '#1f1f1f'
+    },
+    accent: {
+      300: '#E0E0E0',
+      400: '#ADADAD',
+      500: '#5C5C5C',
+      600: '#141414'
+    },
+    text: '#e8e8e8',
+    textalt: '#f8f8f8',
     primary: '#835afd',
-    lilac: '#F4F0FF',
     secondary: '#e559f9',
     danger: '#E73F5D',
-    gray: {
-      300: '#DBDCDD',
-      400: '#a8a8b3',
-      500: '#737380'
-    },
+    highlight: '#F4F0FF',
     google: '#ea4335'
   },
   fonts: {
@@ -31,7 +35,7 @@ export const theme = extendTheme({
     global: {
       body: {
         color: 'text',
-        backgroundColor: 'white'
+        backgroundColor: 'background.400'
       },
       'body, input, button, textarea': {
         font: '400 16px Roboto, sans-serif'
