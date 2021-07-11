@@ -51,7 +51,7 @@ Point your browser to [`localhost:3000`](http://localhost:3000).
 
 - [ ] Create 404 (not found) and 403 (forbidden) pages
 - [ ] Configure and restrict permissions on /admin page (allow access only if author is currently authenticated)
-- [ ] Dark theme + toggle
+- [X] Dark theme + toggle
 - [ ] Deploy + live demo
 
 

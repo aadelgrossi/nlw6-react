@@ -1,12 +1,10 @@
 import { FC } from 'react'
 
-import { ChakraProvider } from '@chakra-ui/react'
-
 import { AuthProvider } from '~/auth'
-import { theme } from '~/styles/theme'
+import { ThemeProvider } from '~/theme'
 
 export const AppProvider: FC = ({ children }) => (
-  <ChakraProvider resetCSS theme={theme}>
+  <ThemeProvider>
     <AuthProvider>{children}</AuthProvider>
-  </ChakraProvider>
+  </ThemeProvider>
 )

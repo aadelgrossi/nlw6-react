@@ -9,7 +9,7 @@ export const Card: FC<{ href: string }> = ({ children, ...props }) => {
       p="6"
       m="4"
       borderWidth="2px"
-      borderColor="gray.200"
+      borderColor="accent.200"
       rounded="lg"
       flexBasis={['auto', '45%']}
       transition="all 0.2s cubic-bezier(.08,.52,.52,1)"

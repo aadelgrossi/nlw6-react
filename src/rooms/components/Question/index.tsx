@@ -16,7 +16,12 @@ export const QuestionCard = ({
   children
 }: QuestionProps): JSX.Element => {
   const background = useMemo(
-    () => (isAnswered ? 'gray.300' : isHighlighted ? 'lilac' : 'reallywhite'),
+    () =>
+      isAnswered
+        ? 'background.500'
+        : isHighlighted
+        ? 'lilac'
+        : 'background.500',
     [isAnswered, isHighlighted]
   )
 

@@ -96,7 +96,7 @@ const NewRoom = (): JSX.Element => {
                 h="50px"
                 borderRadius="lg"
                 px="16px"
-                bg="white"
+                bg="background.400"
                 border="1px"
                 borderColor="gray.400"
                 placeholder="Nome da sala"
