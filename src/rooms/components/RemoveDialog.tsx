@@ -53,7 +53,12 @@ export const RemoveDialog = ({ confirm }: DialogProps): JSX.Element => {
             <Button fontSize="sm" bg="gray.300" mr={3} onClick={onClose}>
               Cancelar
             </Button>
-            <Button fontSize="sm" bg="danger" color="white" onClick={confirm}>
+            <Button
+              fontSize="sm"
+              bg="danger"
+              color="background.400"
+              onClick={confirm}
+            >
               Sim, excluir
             </Button>
           </ModalFooter>

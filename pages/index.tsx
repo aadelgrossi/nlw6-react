@@ -9,6 +9,7 @@ import { ImGoogle } from 'react-icons/im'
 
 import { database, useAuth } from '~/auth'
 import { Separator, Button, SplashBar } from '~/components'
+import { ThemeToggle } from '~/theme'
 
 type JoinRoomFormData = { id: string }
 
@@ -103,9 +104,13 @@ const IndexPage = (): JSX.Element => {
                 h="50px"
                 borderRadius="lg"
                 px="16px"
-                bg="white"
-                border="1px"
-                borderColor="gray.400"
+                bg="background.500"
+                borderWidth="1px"
+                color="text"
+                _placeholder={{
+                  color: 'accent.400'
+                }}
+                borderColor="accent.500"
                 {...register('id')}
                 placeholder="Digite o código da sala"
               />
@@ -118,6 +123,8 @@ const IndexPage = (): JSX.Element => {
                 Entrar na sala
               </Button>
             </Flex>
+
+            <ThemeToggle mt={6} />
           </Flex>
         </Flex>
       </Flex>

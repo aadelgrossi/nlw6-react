@@ -8,7 +8,7 @@ export const SplashBar = (): JSX.Element => {
       as="aside"
       flex={7}
       bg="primary"
-      color="white"
+      color="textalt"
       py="120px"
       px="80px"
     >

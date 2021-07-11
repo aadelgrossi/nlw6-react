@@ -19,7 +19,7 @@ const CustomButton: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
       transition="filter 0.2s"
       h="50px"
       borderRadius="lg"
-      color="white"
+      color="background.400"
       _disabled={{ opacity: 0.6, cursor: 'not-allowed' }}
       _hover={{ filter: 'brightness(0.9)' }}
       {...props}

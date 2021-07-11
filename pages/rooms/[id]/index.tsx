@@ -118,7 +118,7 @@ const SingleRoom = ({ room: { id, name } }: SingleRoomProps): JSX.Element => {
             p={4}
             boxShadow="md"
             borderRadius="lg"
-            bg="reallywhite"
+            bg="background.500"
             resize="vertical"
             minH="130px"
             placeholder="O que você quer perguntar?"

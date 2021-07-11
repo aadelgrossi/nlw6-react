@@ -35,8 +35,15 @@ export const CloseRoomDialog = ({ confirm }: DialogProps): JSX.Element => {
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent w="590px" h="362px">
+        <ModalOverlay bg="blackAlpha.600" />
+        <ModalContent
+          borderRadius="xl"
+          w="500px"
+          h="400px"
+          top="20%"
+          left="35%"
+          bg="background.400"
+        >
           <ModalCloseButton />
           <ModalBody my={12}>
             <Flex align="center" justify="center" direction="column">
@@ -45,17 +52,17 @@ export const CloseRoomDialog = ({ confirm }: DialogProps): JSX.Element => {
                 Encerrar sala
               </Heading>
 
-              <Text color="gray.500" mt={3}>
+              <Text color="accent.500" mt={3}>
                 Tem certeza que você deseja encerrar esta sala?
               </Text>
             </Flex>
           </ModalBody>
 
           <ModalFooter justifyContent="center" mb={6}>
-            <Button fontSize="sm" bg="gray.300" mr={3} onClick={onClose}>
+            <Button fontSize="sm" bg="accent.500" mr={3} onClick={onClose}>
               Cancelar
             </Button>
-            <Button fontSize="sm" bg="danger" color="white" onClick={confirm}>
+            <Button fontSize="sm" bg="danger" color="text" onClick={confirm}>
               Sim, encerrar
             </Button>
           </ModalFooter>
